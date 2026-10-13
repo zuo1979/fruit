@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>フルーツ王国 - 新鮮直送・品質保証</title>
+<style>
+/* SECTION: reset & base */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:#2d3436;line-height:1.6;background:#f8fdf5}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+body{overflow-x:hidden}
+
+/* SECTION: nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 1px 8px rgba(0,0,0,0.06);transition:box-shadow .3s}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-size:1.3rem;font-weight:700;color:#27ae60;display:flex;align-items:center;gap:6px}
+.nav-logo span{font-size:1.5rem}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:.9rem;color:#555;font-weight:500;transition:color .2s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:#27ae60}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#27ae60;transition:width .3s}
+.nav-links a:hover::after{width:100%}
+.nav-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#27ae60}
+
+/* SECTION: hero */
+.hero{margin-top:60px;background:linear-gradient(135deg,#fafafa 0%,#e0e0e0 100%);min-height:200px;position:relative;overflow:hidden}
+.hero-fruits{position:absolute;inset:0}
+.hero-fruit{position:absolute;object-fit:contain;animation:bounce-fruit 2.5s ease-in-out infinite;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.08))}
+.hero-fruit.wiggle{animation:wiggle-fruit 3s ease-in-out infinite}
+.hero-fruit.spin{animation:spin-fruit 4s linear infinite}
+@keyframes bounce-fruit{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+@keyframes wiggle-fruit{0%,100%{transform:translateX(0) rotate(0deg)}50%{transform:translateX(15px) rotate(5deg)}}
+@keyframes spin-fruit{0%{transform:rotate(0deg) translateY(0)}25%{transform:rotate(90deg) translateY(-10px)}50%{transform:rotate(180deg) translateY(0)}75%{transform:rotate(270deg) translateY(-10px)}100%{transform:rotate(360deg) translateY(0)}}
+@keyframes float{0%{transform:translateX(100%) translateY(-50%)}100%{transform:translateX(-100%) translateY(-50%)}}
+.hero-content{position:relative;z-index:2;padding:20px}
+.hero h1{font-size:3.2rem;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,0.15);letter-spacing:2px}
+.hero .slogan{font-size:1.3rem;color:rgba(255,255,255,0.92);font-weight:400;margin-bottom:28px}
+.hero .cta-btn{display:inline-block;background:#fff;color:#27ae60;padding:14px 36px;border-radius:50px;font-size:1rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,0.1);transition:all .3s}
+.hero .cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.15)}
+
+/* SECTION: features */
+.features{max-width:1200px;margin:0 auto;padding:60px 20px}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.feature-card{background:#fff;border-radius:16px;padding:32px 24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.04);transition:transform .3s,box-shadow .3s}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(39,174,96,0.12)}
+.feature-icon{font-size:2.5rem;margin-bottom:16px}
+.feature-card h3{font-size:1.1rem;color:#27ae60;margin-bottom:8px}
+.feature-card p{font-size:.88rem;color:#777;line-height:1.6}
+
+/* SECTION: lucky-free */
+.lucky-section{max-width:1200px;margin:0 auto;padding:0 20px}
+.lucky-wrap{background:linear-gradient(135deg,#fff8e1,#fff3cd);border-radius:20px;padding:24px 32px 16px;text-align:center;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(255,193,7,0.15)}
+.lucky-wrap::before{content:'🎉';position:absolute;font-size:6rem;opacity:.08;left:-10px;top:-10px}
+.lucky-wrap::after{content:'🎊';position:absolute;font-size:6rem;opacity:.08;right:-10px;bottom:-10px}
+.lucky-header{position:relative;margin-bottom:8px}
+.lucky-header h2{font-size:1.8rem;color:#e67e22;display:inline-flex;align-items:center;gap:8px}
+.lucky-header h2 .crown{font-size:1.6rem}
+.lucky-date{font-size:1.2rem;color:#c0883a;font-weight:600;margin-bottom:6px;margin-top:20px;margin-left:-40px;position:relative;display:inline-block}
+.lucky-countdown{font-size:1.1rem;color:#e67e22;margin-bottom:24px;position:relative;font-weight:500;background:rgba(230,126,34,0.08);display:inline-block;padding:6px 20px;border-radius:50px}
+.lucky-date .num,.lucky-countdown .num{color:#e74c3c;font-weight:700}
+.lucky-cards{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;position:relative}
+.lucky-card{background:#fff;border-radius:18px;padding:28px 24px 22px;min-width:200px;flex:0 1 220px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.06);transition:transform .35s,box-shadow .35s;position:relative}
+.lucky-card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 12px 32px rgba(0,0,0,0.1)}
+.lucky-rank{position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:64px;z-index:2;line-height:0}
+.lucky-rank img{width:100%;height:auto;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25))}
+.lucky-emoji{margin:8px 0 10px;height:110px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:12px;background:#fafafa}
+.lucky-emoji img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px}
+.lucky-name{font-size:1.15rem;font-weight:700;color:#2d3436;margin-bottom:6px;line-height:1.3}.lucky-name .jp-name{font-size:1rem;font-weight:700;color:#e67e22}.lucky-name .tc-name{font-size:.85rem;font-weight:400;color:#888}
+.lucky-tag{display:inline-block;background:#fff3e0;color:#e67e22;font-size:.75rem;padding:3px 12px;border-radius:50px;font-weight:600}
+.lucky-card.first{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#f9d71c 0%,#f1c40f 25%,#e67e22 50%,#f1c40f 75%,#f9d71c 100%) border-box;box-shadow:0 0 28px rgba(241,196,15,0.4),0 8px 24px rgba(0,0,0,0.08)}
+.lucky-card.second{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#eceff1 0%,#cfd8dc 30%,#90a4ae 50%,#cfd8dc 70%,#eceff1 100%) border-box;box-shadow:0 0 20px rgba(176,190,197,0.45),0 6px 18px rgba(0,0,0,0.07)}
+.lucky-card.third{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#f5b041 0%,#cd6133 40%,#a04000 55%,#cd6133 70%,#f5b041 100%) border-box;box-shadow:0 0 18px rgba(205,97,51,0.35),0 6px 18px rgba(0,0,0,0.07)}
+.lucky-note{margin-top:12px;font-size:.85rem;color:#bbb;position:relative}
+.lucky-refresh{margin-top:6px;font-size:.82rem;color:#27ae60;font-weight:500;position:relative}
+@keyframes lucky-pop{0%{transform:scale(0.6);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.lucky-card.animate{animation:lucky-pop .5s ease-out both}
+.lucky-card.animate:nth-child(2){animation-delay:.15s}
+.lucky-card.animate:nth-child(3){animation-delay:.3s}
+@media(max-width:640px){
+  .lucky-cards{flex-direction:column;align-items:center;gap:20px}
+  .lucky-card{min-width:0;width:80%;max-width:280px}
+  .lucky-wrap{padding:28px 16px}
+  .lucky-header h2{font-size:1.4rem}
+}
+
+/* SECTION: fruits */
+.fruits-section{max-width:1200px;margin:0 auto;padding:0 20px 30px}
+.section-title{text-align:center;margin-bottom:40px}
+.section-title h2{font-size:2rem;color:#2d3436;margin-bottom:8px}
+.section-title p{color:#888;font-size:.95rem}
+
+/* search & filter bar */
+.toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:center;margin-bottom:32px}
+.search-box{position:relative;width:320px;max-width:100%}
+.search-box input{width:100%;padding:12px 16px 12px 42px;border:2px solid #e0e0e0;border-radius:50px;font-size:.95rem;outline:none;transition:border-color .3s;background:#fff}
+.search-box input:focus{border-color:#27ae60}
+.search-box .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1.1rem;color:#aaa}
+.filter-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.filter-tab{padding:8px 20px;border-radius:50px;border:2px solid #e0e0e0;background:#fff;font-size:.88rem;cursor:pointer;transition:all .25s;color:#666;font-weight:500}
+.filter-tab:hover{border-color:#27ae60;color:#27ae60}
+.filter-tab.active{background:#27ae60;color:#fff;border-color:#27ae60}
+
+/* fruit grid */
+.fruit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.fruit-card{background:transparent;border-radius:0;overflow:visible;box-shadow:none;transition:transform .3s;cursor:default;padding:8px 4px;text-align:center}
+.fruit-card:hover{transform:translateY(-4px)}
+.fruit-card.hidden{display:none}
+.fruit-emoji{height:140px;overflow:hidden;background:#fff}
+.fruit-emoji img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .4s;padding:8px;box-sizing:border-box}
+.fruit-card:hover .fruit-emoji img{transform:scale(1.06)}
+.fruit-info{padding:16px 18px 20px}
+.fruit-name{font-size:1.05rem;font-weight:600;color:#2d3436;margin-bottom:6px;line-height:1.3}.fruit-name .jp-name{font-size:.95rem;font-weight:700;color:#27ae60}.fruit-name .tc-name{font-size:.8rem;font-weight:400;color:#888}
+.fruit-id{display:inline-block;background:#27ae60;color:#fff;font-size:.7rem;padding:1px 7px;border-radius:8px;font-weight:700;margin-right:4px;vertical-align:middle;min-width:24px;text-align:center}
+.fruit-desc{font-size:.82rem;color:#999;margin-bottom:12px;line-height:1.5}
+.fruit-prices{display:flex;gap:12px;align-items:flex-end}
+.price-tag{display:flex;flex-direction:column}
+.price-label{font-size:.72rem;color:#aaa;margin-bottom:2px}
+.price-value{font-size:1.2rem;font-weight:700;color:#e74c3c}
+.price-value.wholesale{color:#27ae60;font-size:1.05rem}
+.price-unit{font-size:.75rem;color:#bbb;font-weight:400}
+.fruit-badge{display:inline-block;background:#fff3e0;color:#f39c12;font-size:.7rem;padding:2px 8px;border-radius:10px;margin-left:auto;font-weight:500}
+
+/* empty state */
+.empty-state{text-align:center;padding:60px 20px;color:#aaa;display:none;grid-column:1/-1}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
+.empty-state p{font-size:1rem}
+
+/* SECTION: promo banner */
+.promo-banner{background:linear-gradient(135deg,#ff6b6b,#ee5a24);margin:0 auto;max-width:1200px;border-radius:20px;padding:40px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.promo-banner::before{content:'🔥';position:absolute;font-size:8rem;opacity:.1;right:-20px;top:-10px}
+.promo-banner h2{font-size:1.8rem;margin-bottom:10px;position:relative}
+.promo-banner p{font-size:1rem;opacity:.92;position:relative}
+.promo-items{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px;position:relative}
+.promo-item{background:rgba(255,255,255,0.2);padding:8px 20px;border-radius:50px;font-size:.9rem;backdrop-filter:blur(4px)}
+
+/* SECTION: footer */
+.footer{background:#2d3436;color:rgba(255,255,255,0.7);padding:40px 20px;margin-top:60px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px}
+.footer-left p{font-size:.85rem;margin-bottom:4px}
+.footer-right{text-align:right}
+.footer-right .qr-placeholder{width:100px;height:100px;background:rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,0.4);margin-left:auto;margin-bottom:8px;border:2px dashed rgba(255,255,255,0.2)}
+.footer-right p{font-size:.8rem}
+
+/* SECTION: auth-gate */
+.xg-auth-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;justify-content:center;align-items:center;opacity:0;transition:opacity .25s}
+.xg-auth-mask.visible{opacity:1}
+.xg-auth-box{background:#fff;border-radius:16px;padding:36px 32px;width:380px;max-width:90vw;box-shadow:0 12px 40px rgba(0,0,0,.18);text-align:center}
+.xg-auth-box h3{font-size:1.15rem;color:#2d3436;margin-bottom:6px}
+.xg-auth-box p{font-size:.82rem;color:#999;margin-bottom:20px}
+.xg-auth-box input{width:100%;padding:12px 16px;border:2px solid #e0e0e0;border-radius:10px;font-size:1rem;outline:none;transition:border-color .2s;text-align:center;letter-spacing:2px}
+.xg-auth-box input:focus{border-color:#27ae60}
+.xg-auth-box .xg-auth-btn{margin-top:16px;width:100%;padding:12px;border:none;border-radius:10px;background:#27ae60;color:#fff;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s}
+.xg-auth-box .xg-auth-btn:hover{background:#219a52}
+.xg-auth-box .xg-auth-btn:disabled{background:#ccc;cursor:not-allowed}
+.xg-auth-err{color:#e74c3c;font-size:.82rem;margin-top:8px;min-height:1.2em}
+
+/* SECTION: responsive */
+/* 大屏宽屏：主标题更大气 */
+@media(min-width:1400px){
+  .hero h1{font-size:3.8rem;letter-spacing:4px}
+}
+/* 平板横屏 / 小笔电 */
+@media(max-width:900px){
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .hero h1{font-size:2.4rem}
+  .section-title h2{font-size:1.7rem}
+  .lucky-cards{gap:16px}
+  .lucky-card{flex-basis:200px;padding:24px 18px 18px}
+  .fruit-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+}
+/* 平板竖屏 */
+@media(max-width:768px){
+  .lucky-cards{flex-wrap:wrap;gap:14px}
+  .lucky-card{flex:1 1 150px;min-width:0;padding:20px 14px 16px}
+  .lucky-emoji{height:90px}
+  .lucky-name{font-size:1rem}
+  .search-box{width:100%;max-width:420px}
+}
+/* 手机 */
+@media(max-width:640px){
+  .nav-links{display:none;position:absolute;top:60px;left:0;right:0;background:#fff;flex-direction:column;padding:16px 20px;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+  .features-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .feature-card{padding:20px 16px}
+  .fruit-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .fruit-emoji{height:110px}
+  .fruit-info{padding:10px 12px 14px}
+  .fruit-name{font-size:.95rem}
+  .fruit-desc{font-size:.75rem;margin-bottom:8px;line-height:1.4}
+  .fruit-prices{gap:8px;flex-wrap:wrap}
+  .price-value{font-size:1rem}
+  .price-value.wholesale{font-size:.9rem}
+  .fruit-badge{font-size:.65rem;padding:2px 6px}
+  .hero{min-height:140px}
+  .hero h1{font-size:1.7rem}
+  .lucky-wrap{padding:28px 14px}
+  .lucky-header h2{font-size:1.3rem}
+  .lucky-cards{flex-direction:column;align-items:center;gap:20px}
+  .lucky-card{width:85%;max-width:260px;flex:none}
+  .lucky-note{font-size:.78rem}
+  .footer-inner{flex-direction:column;text-align:center}
+  .footer-right{text-align:center}
+  .footer-right .qr-placeholder{margin:0 auto 8px}
+  .search-box{width:100%}
+  .toolbar{flex-direction:column;gap:12px}
+  .section-title h2{font-size:1.5rem;margin-bottom:4px}
+  .section-title p{font-size:.85rem}
+  .filter-tab{padding:6px 14px;font-size:.8rem}
+}
+/* 超小屏手机 */
+@media(max-width:380px){
+  .nav-logo{font-size:1.1rem}
+  .hero{min-height:120px}
+  .hero h1{font-size:1.4rem}
+  .fruit-emoji{height:90px}
+  .price-value{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+
+<!-- SECTION: nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><span>🍊</span> フルーツ王国<br><small style="font-size:.7rem;font-weight:400;color:#999">水果王國</small></div>
+    <div class="nav-links" id="navLinks"></div>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+  </div>
+</nav>
+
+<!-- SECTION: hero -->
+<section class="hero" id="hero">
+  <div class="hero-fruits" id="heroFruits"></div>
+</section>
+
+<!-- SECTION: lucky-free -->
+<section class="lucky-section" id="lucky">
+  <div class="lucky-wrap">
+    <div class="lucky-header">
+      <h2><span class="crown">👑</span> 今日のラッキーフルーツ<br><small style="font-size:1rem;font-weight:400">今日幸運果</small></h2>
+    </div>
+    <p class="lucky-countdown" id="luckyCountdown"></p>
+    <div class="lucky-cards" id="luckyCards"></div>
+    <p class="lucky-date" id="luckyDate"></p>
+  </div>
+</section>
+
+<!-- SECTION: fruits -->
+<section class="fruits-section" id="fruits">
+  <div class="fruit-grid" id="fruitGrid"></div>
+</section>
+
+<footer style="background:#2d3436;color:rgba(255,255,255,0.6);text-align:center;padding:16px 20px;font-size:.8rem;line-height:1.6">
+  © 2026 フルーツ王国 著作権所有
+</footer>
+
+<!-- 歷史記錄彈窗 -->
+<div id="historyModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;overflow-y:auto">
+  <div style="max-width:900px;margin:30px auto;background:#fff;border-radius:16px;overflow:hidden">
+    <div style="background:#e67e22;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+      <h3 style="margin:0;font-size:1.1rem">📊 抽選履歴 / 歷史開獎記錄</h3>
+      <span id="closeHistory" style="cursor:pointer;font-size:1.5rem;line-height:1">&times;</span>
+    </div>
+    <div style="padding:20px">
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <button id="tabChart" style="flex:1;padding:10px;border:none;border-radius:8px;background:#e67e22;color:#fff;cursor:pointer;font-weight:600">📈 中獎走勢圖 / 中奖走势图</button>
+        <button id="tabTable" style="flex:1;padding:10px;border:none;border-radius:8px;background:#f0f0f0;color:#333;cursor:pointer">📋 履歴 / 历史记录</button>
+        <button id="btnDrawChart" style="padding:10px 16px;background:#27ae60;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600">🎯 生成走勢圖</button>
+      </div>
+      <div id="chartView" style="overflow-x:auto"></div>
+      <div id="tableView" style="display:none;max-height:500px;overflow-y:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+          <thead><tr style="background:#f8f8f8;position:sticky;top:0"><th style="padding:6px;border-bottom:2px solid #eee"><input type="checkbox" id="checkAllHist"></th><th style="padding:6px;border-bottom:2px solid #eee">日期</th><th style="padding:6px;border-bottom:2px solid #eee">场次</th><th style="padding:6px;border-bottom:2px solid #eee">第一名</th><th style="padding:6px;border-bottom:2px solid #eee">第二名</th><th style="padding:6px;border-bottom:2px solid #eee">第三名</th></tr></thead>
+          <tbody id="historyTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* SECTION: data */
+const fruits = [
+  {id:1,name:'荔枝',jp:'ライチ',emoji:'🍒',img:'fruit-images/%231荔枝.png',retail:15.8,wholesale:11.0,desc:'廣東產區，果肉晶瑩清甜',category:'tropical'},
+  {id:2,name:'青蘋果',jp:'青リンゴ',emoji:'🍏',img:'fruit-images/%232青苹果.png',retail:6.5,wholesale:4.5,desc:'酸甜爽口，適合榨汁',category:'pome'},
+  {id:3,name:'山竹',jp:'マンゴスチン',emoji:'🟣',img:'fruit-images/%233山竹.png',retail:29.8,wholesale:22.0,desc:'泰國進口，果肉雪白清甜',category:'imported'},
+  {id:4,name:'雪梨',jp:'白ナシ',emoji:'🍐',img:'fruit-images/%234雪梨.png',retail:6.0,wholesale:4.0,desc:'砀山產區，多汁化渣',category:'pome'},
+  {id:5,name:'楊梅',jp:'ヨウバイ',emoji:'🔴',img:'fruit-images/%235杨梅.png',retail:22.8,wholesale:16.0,desc:'浙江仙居產區，酸甜多汁',category:'berry'},
+  {id:6,name:'石榴',jp:'ザクロ',emoji:'🔴',img:'fruit-images/%236石榴.png',retail:12.8,wholesale:9.0,desc:'雲南產區，籽紅多汁',category:'berry'},
+  {id:7,name:'枇杷',jp:'ビワ',emoji:'🟡',img:'fruit-images/%237枇杷.png',retail:16.8,wholesale:12.0,desc:'福建產區，潤肺清甜',category:'pome'},
+  {id:8,name:'檸檬',jp:'レモン',emoji:'🍋',img:'fruit-images/%238柠檬.png',retail:6.0,wholesale:4.0,desc:'安岳黄檸檬，维C豐富',category:'citrus'},
+  {id:9,name:'柚子',jp:'ユズ',emoji:'🍊',img:'fruit-images/%239柚子.png',retail:6.0,wholesale:4.0,desc:'琯溪蜜柚，酸甜适口',category:'citrus'},
+  {id:10,name:'蜜桔',jp:'みかん',emoji:'🍊',img:'fruit-images/%2310蜜桔.png',retail:5.5,wholesale:3.8,desc:'湧泉蜜桔，皮薄肉嫩',category:'citrus'},
+  {id:11,name:'葡萄',jp:'ブドウ',emoji:'🍇',img:'fruit-images/%2311葡萄.png',retail:12.8,wholesale:9.0,desc:'顆粒飽滿，甜度爆表',category:'berry'},
+  {id:12,name:'無花果',jp:'イチジク',emoji:'🟣',img:'fruit-images/%2312无花果.png',retail:22.8,wholesale:16.0,desc:'雲南產區，軟糯香甜',category:'berry'},
+  {id:13,name:'柿子',jp:'カキ',emoji:'🟠',img:'fruit-images/%2313柿子.png',retail:7.8,wholesale:5.5,desc:'陝西產區，軟糯香甜',category:'berry'},
+  {id:14,name:'草莓',jp:'イチゴ',emoji:'🍓',img:'fruit-images/%2314草莓.png',retail:18.0,wholesale:13.0,desc:'紅顏草莓，奶香濃郁',category:'berry'},
+  {id:15,name:'藍莓',jp:'ブルーベリー',emoji:'🫐',img:'fruit-images/%2315蓝莓.png',retail:35.0,wholesale:25.0,desc:'雲南產區，花青素豐富',category:'berry'},
+  {id:16,name:'聖女果',jp:'ミニトマト',emoji:'🍅',img:'fruit-images/%2316圣女果.png',retail:8.0,wholesale:5.5,desc:'千禧果，酸甜可口',category:'berry'},
+  {id:17,name:'西瓜',jp:'スイカ',emoji:'🍉',img:'fruit-images/%2317西瓜.png',retail:3.5,wholesale:2.0,desc:'麒麟瓜，沙瓤甜糯',category:'melon'},
+  {id:18,name:'哈密瓜',jp:'ハミウリ',emoji:'🍈',img:'fruit-images/%2318哈密瓜.png',retail:8.0,wholesale:5.5,desc:'新疆產區，香甜脆嫩',category:'melon'},
+  {id:19,name:'番石榴',jp:'グァバ',emoji:'🟢',img:'fruit-images/%2319番石榴.png',retail:9.8,wholesale:7.0,desc:'廣西產區，清脆香甜',category:'tropical'},
+  {id:20,name:'水蜜桃',jp:'モモ',emoji:'🍑',img:'fruit-images/%2320水蜜桃.png',retail:10.0,wholesale:7.0,desc:'無錫產區，入口即化',category:'melon'},
+  {id:21,name:'楊桃',jp:'スターフルーツ',emoji:'⭐',img:'fruit-images/%2321杨桃.png',retail:9.8,wholesale:7.0,desc:'廣東產區，清甜多汁',category:'tropical'},
+  {id:22,name:'龍眼',jp:'リュウガン',emoji:'🟡',img:'fruit-images/%2322龙眼.png',retail:15.8,wholesale:11.0,desc:'廣東產區，清甜多汁',category:'tropical'},
+  {id:23,name:'香蕉',jp:'バナナ',emoji:'🍌',img:'fruit-images/%2323香蕉.png',retail:5.5,wholesale:3.8,desc:'海南產區，軟糯香甜',category:'tropical'},
+  {id:24,name:'芒果',jp:'マンゴー',emoji:'🥭',img:'fruit-images/%2324芒果.png',retail:15.0,wholesale:10.0,desc:'攀枝花凱特芒，果肉細膩',category:'tropical'},
+  {id:25,name:'鳳梨',jp:'パイナップル',emoji:'🍍',img:'fruit-images/%2325菠萝.png',retail:5.0,wholesale:3.5,desc:'海南金鑽凤梨，不泡鹽水',category:'tropical'},
+  {id:26,name:'椰子',jp:'ココナッツ',emoji:'🥥',img:'fruit-images/%2326椰子.png',retail:12.0,wholesale:8.0,desc:'海南青椰，清甜解渴',category:'tropical'},
+  {id:27,name:'火龍果',jp:'ドラゴンフルーツ',emoji:'🐉',img:'fruit-images/%2327火龙果.png',retail:10.0,wholesale:7.0,desc:'红心火龍果，甜度更高',category:'tropical'},
+  {id:28,name:'百香果',jp:'パッションフルーツ',emoji:'🥭',img:'fruit-images/%2328百香果.png',retail:15.0,wholesale:10.0,desc:'紫皮大果，香气濃郁',category:'tropical'},
+  {id:29,name:'釋迦果',jp:'釈迦頭',emoji:'🟢',img:'fruit-images/%2329释迦果.png',retail:25.8,wholesale:18.0,desc:'台灣產區，軟糯奶甜',category:'tropical'},
+  {id:30,name:'甘蔗',jp:'サトウキビ',emoji:'🎋',img:'fruit-images/%2330甘蔗.png',retail:3.0,wholesale:2.0,desc:'青皮甘蔗，汁多甘甜',category:'tropical'},
+  {id:31,name:'奇異果',jp:'キウイ',emoji:'🥝',img:'fruit-images/%2331猕猴桃.png',retail:12.0,wholesale:8.5,desc:'周至翠香，酸甜适口',category:'tropical'},
+  {id:32,name:'李子',jp:'スモモ',emoji:'🟣',img:'fruit-images/%2332李子.png',retail:8.8,wholesale:6.0,desc:'廣東產區，酸甜脆爽',category:'berry'},
+  {id:33,name:'榴槤',jp:'ドリアン',emoji:'🍈',img:'fruit-images/%2333榴莲.png',retail:35.0,wholesale:25.0,desc:'泰國金枕，綿密濃郁',category:'imported'},
+  {id:34,name:'車厘子',jp:'チェリー',emoji:'🍒',img:'fruit-images/%2334车厘子.png',retail:45.0,wholesale:32.0,desc:'智利進口，JJ級大果',category:'imported'},
+  {id:35,name:'牛油果',jp:'アボカド',emoji:'🥑',img:'fruit-images/%2335牛油果.png',retail:18.0,wholesale:13.0,desc:'墨西哥進口，綿密細膩',category:'imported'}
+];
+
+/* SECTION: hero floating fruits */
+(function initHeroFruits(){
+  const container = document.getElementById('heroFruits');
+  if(!container || !fruits.length) return;
+  const TOTAL = 50;
+  for(let i=0;i<TOTAL;i++){
+    const f = fruits[Math.floor(Math.random()*fruits.length)];
+    const img = document.createElement('img');
+    img.src = f.img;
+    const anims = ['','wiggle','spin'];
+    const animCls = anims[Math.floor(Math.random()*anims.length)];
+    img.className = 'hero-fruit ' + animCls;
+    img.style.left = (1 + (i*97/TOTAL)) + '%';
+    img.style.top = (Math.random()*75) + '%';
+    const size = 42 + Math.random()*25;
+    img.style.width = size + 'px';
+    img.style.height = 'auto';
+    img.style.animationDelay = (Math.random()*2) + 's';
+    img.style.animationDuration = (2 + Math.random()*1.5) + 's';
+    container.appendChild(img);
+  }
+})();
+
+/* SECTION: render */
+const grid = document.getElementById('fruitGrid');
+let activeCategory = 'all';
+let searchQuery = '';
+
+function renderFruits() {
+  if(!grid) return;
+  const q = searchQuery.toLowerCase();
+  const filtered = fruits.filter(f => {
+    const matchCat = activeCategory === 'all' || f.category === activeCategory;
+    const matchSearch = !q || f.name.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
+    return matchCat && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state" style="display:block"><div class="empty-icon">🔍</div><p>一致するフルーツが見つかりません<br><small>沒有找到匹配的水果</small></p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(f => `
+    <div class="fruit-card">
+      <div class="fruit-emoji"><img src="${f.img}" alt="${f.name}" loading="lazy"></div>
+      <div class="fruit-name">#${f.id}<br><span class="jp-name">${f.jp}</span><br><span class="tc-name">${f.name}</span></div>
+    </div>
+  `).join('');
+}
+
+/* SECTION: lucky-draw */
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+function seededRandom(s) {
+  s = (s * 9301 + 49297) % 233280;
+  return { val: s / 233280, next: s };
+}
+function drawPicks(seed) {
+  const picked = [];
+  for (let i = 0; i < 3; i++) {
+    const r = seededRandom(seed);
+    seed = r.next;
+    const idx = Math.floor(r.val * fruits.length);
+    picked.push(fruits[idx]);
+  }
+  return picked;
+}
+const ranks = [
+  { label: '👑', cls: 'gold', cardCls: 'first' },
+  { label: '👑', cls: 'silver', cardCls: 'second' },
+  { label: '👑', cls: 'bronze', cardCls: 'third' }
+];
+const luckyContainer = document.getElementById('luckyCards');
+const luckyDateEl = document.getElementById('luckyDate');
+const luckyCountdownEl = document.getElementById('luckyCountdown');
+const slots = [14 * 60 + 30, 21 * 60 + 30];
+
+function getSessionInfo() {
+  const now = new Date();
+  const curMin = now.getHours() * 60 + now.getMinutes();
+  let session, sessionLabel, seed, nextSlotMin, nextSlotLabel, dateStr;
+  if (curMin < slots[0]) {
+    // 14:30前：显示前一天21:30场次的结果（已开奖），倒计时到当天14:30
+    const yd = new Date(now.getTime() - 86400000);
+    const y = yd.getFullYear(), m = yd.getMonth() + 1, d = yd.getDate();
+    session = 1;
+    sessionLabel = y + '年' + m + '月' + d + '日 21:30回<br><small>21:30場次（前場）</small>';
+    dateStr = y + pad2(m) + pad2(d);
+    seed = y * 10000 + m * 100 + d + 2130;
+    nextSlotMin = slots[0] - curMin;
+    nextSlotLabel = '本日14:30回抽選まで<br><small>距今日14:30場次開獎</small>';
+  } else if (curMin < slots[1]) {
+    const y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+    session = 0;
+    sessionLabel = y + '年' + m + '月' + d + '日 14:30回<br><small>14:30場次</small>';
+    dateStr = y + pad2(m) + pad2(d);
+    seed = y * 10000 + m * 100 + d + 1430;
+    nextSlotMin = slots[1] - curMin;
+    nextSlotLabel = '21:30回抽選まで<br><small>距21:30場次開獎</small>';
+  } else {
+    const y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+    session = 1;
+    sessionLabel = y + '年' + m + '月' + d + '日 21:30回<br><small>21:30場次</small>';
+    dateStr = y + pad2(m) + pad2(d);
+    seed = y * 10000 + m * 100 + d + 2130;
+    nextSlotMin = (24 * 60 - curMin) + slots[0];
+    nextSlotLabel = '明日14:30回抽選まで<br><small>距明日14:30場次開獎</small>';
+  }
+  return { session, sessionLabel, dateStr, seed, nextSlotMin, nextSlotLabel, y: now.getFullYear(), m: now.getMonth()+1, d: now.getDate() };
+}
+
+const API = {
+  lucky: '/api/x7k2m/p1',
+  next: '/api/x7k2m/s7',
+  login: '/api/x7k2m/auth',
+  setNext: '/api/x7k2m/s1',
+  clearNext: '/api/x7k2m/s2',
+  redraw: '/api/x7k2m/s3',
+  changePw: '/api/x7k2m/s4',
+  slots: '/api/x7k2m/s5',
+  history: '/api/x7k2m/s6'
+};
+
+var _firstLoad = true;
+function updateLucky() {
+  fetch(API.lucky)
+    .then(r => r.json())
+    .then(data => {
+      const d = data.display_date;
+      const y = d.substring(0,4), m = d.substring(4,6), day = d.substring(6,8);
+      let leftText = '🕐 ' + y + '年' + parseInt(m) + '月' + parseInt(day) + '日 ' +
+        data.display_label + ' 抽選結果発表【上期開獎結果】';
+      leftText = leftText.replace(/(\d+)/g, '<span style="color:#e74c3c;font-weight:700">$1</span>');
+      const sessionLabel = '<span style="color:#e67e22">' + leftText + '</span>' +
+        '<span style="color:#27ae60;float:right;text-decoration:underline;cursor:pointer">🕐【過去の抽選結果/歷史開獎記錄】</span>';
+      luckyDateEl.innerHTML = sessionLabel;
+      // 歷史記錄點擊事件
+      setTimeout(function() {
+        var histLink = luckyDateEl.querySelector('span[style*="underline"]');
+        if (histLink) {
+          histLink.addEventListener('click', openHistoryModal);
+        }
+      }, 0);
+      const ch = Math.floor(data.next_min / 60), cm = data.next_min % 60;
+      luckyCountdownEl.innerHTML = data.next_label + '回抽選まで あと' +
+        (ch > 0 ? ch + '時間' : '') + cm + '分' +
+        '【距離' + data.next_label + '抽獎還有' +
+        (ch > 0 ? ch + '小時' : '') + cm + '分鐘】';
+      luckyCountdownEl.innerHTML = luckyCountdownEl.innerHTML.replace(/(\d+)/g, '<span class="num">$1</span>');
+
+      function renderCards() {
+        luckyContainer.innerHTML = data.fruits.map(function(f, i) {
+          const fruit = fruits.find(fr => fr.id === f.id);
+          const img = fruit ? fruit.img : '';
+          return '<div class="lucky-card animate ' + ranks[i].cardCls + '">' +
+            '<div class="lucky-rank ' + ranks[i].cls + '"><img src="fruit-images/medal-' + (i+1) + '.png" alt=""></div>' +
+            '<div class="lucky-emoji"><img src="' + img + '" alt="' + f.name + '"></div>' +
+            '<div class="lucky-name">#' + f.id + '<br><span class="jp-name">' + f.jp + '</span><br><span class="tc-name">' + f.name + '</span></div>' +
+            '<div class="lucky-tag">本日無料<br><small>本場免單</small></div></div>';
+        }).join('');
+      }
+
+      // 只有场次变化时才播放动画
+      var currentKey = data.display_date + '_' + data.display_label;
+      var lastKey = localStorage.getItem('lastLuckyKey');
+      var shouldAnimate = (currentKey !== lastKey);
+      localStorage.setItem('lastLuckyKey', currentKey);
+
+      if (shouldAnimate) {
+        // 先渲染空白卡片
+        luckyContainer.innerHTML = data.fruits.map(function(f, i) {
+          return '<div class="lucky-card ' + ranks[i].cardCls + '">' +
+            '<div class="lucky-rank ' + ranks[i].cls + '"><img src="fruit-images/medal-' + (i+1) + '.png" alt=""></div>' +
+            '<div class="lucky-emoji"><img id="rollImg' + i + '" src="" style="width:120px;height:120px;object-fit:contain"></div>' +
+            '<div class="lucky-name">???</div></div>';
+        }).join('');
+        // 快速切换动画
+        data.fruits.forEach(function(finalF, idx) {
+          var finalFruit = fruits.find(function(fr){return fr.id===finalF.id;});
+          var imgEl = document.getElementById('rollImg' + idx);
+          var count = 0;
+          var maxCount = 30 + idx * 15;
+          var speed = 100;
+          function switchImg() {
+            var rf = fruits[Math.floor(Math.random() * fruits.length)];
+            imgEl.src = rf.img;
+            count++;
+            if (count >= maxCount) {
+              imgEl.src = finalFruit.img;
+              if (idx === 2) setTimeout(renderCards, 1000);
+            } else {
+              speed += 8;
+              setTimeout(switchImg, speed);
+            }
+          }
+          setTimeout(switchImg, idx * 500);
+        });
+      } else {
+        renderCards();
+      }
+    })
+    .catch(e => { luckyCountdownEl.textContent = '後端連接失敗 / 後端連接失敗'; });
+}
+updateLucky();
+// 每60秒刷新一次，倒計時最後5分鐘改為每10秒刷新
+var refreshTimer = null;
+function scheduleRefresh() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  // 讀取當前倒計時
+  var nextMin = currentNextMin || 999;
+  var interval = nextMin < 1 ? 5000 : 120000;
+  refreshTimer = setInterval(function() {
+    updateLucky();
+    scheduleRefresh(); // 重新計算間隔
+  }, interval);
+}
+var currentNextMin = 999;
+// updateLucky裡更新 currentNextMin
+var _origUpdateLucky = updateLucky;
+updateLucky = function() {
+  _origUpdateLucky();
+  // 從返回數據裡讀 next_min
+  fetch(API.next).then(r=>r.json()).then(function(d){ currentNextMin = d.next_min; });
+};
+scheduleRefresh();
+
+// ── 歷史記錄彈窗 ──
+var historyData = null;
+function openHistoryModal() {
+  document.getElementById('historyModal').style.display = 'block';
+  if (!historyData) {
+    fetch(API.history).then(r => r.json()).then(function(data) {
+      historyData = data.history;
+      renderHistoryTable();
+      renderHistoryChart(historyData.slice(0, 20));
+      // 默认显示历史记录tab
+      document.getElementById('chartView').style.display = 'none';
+      document.getElementById('tableView').style.display = 'block';
+      document.getElementById('tabTable').style.background = '#e67e22';
+      document.getElementById('tabTable').style.color = '#fff';
+      document.getElementById('tabChart').style.background = '#f0f0f0';
+      document.getElementById('tabChart').style.color = '#333';
+    });
+  }
+}
+document.getElementById('closeHistory').addEventListener('click', function() {
+  document.getElementById('historyModal').style.display = 'none';
+});
+document.getElementById('tabChart').addEventListener('click', function() {
+  document.getElementById('chartView').style.display = 'block';
+  document.getElementById('tableView').style.display = 'none';
+  this.style.background = '#e67e22'; this.style.color = '#fff';
+  document.getElementById('tabTable').style.background = '#f0f0f0'; document.getElementById('tabTable').style.color = '#333';
+});
+document.getElementById('tabTable').addEventListener('click', function() {
+  document.getElementById('chartView').style.display = 'none';
+  document.getElementById('tableView').style.display = 'block';
+  this.style.background = '#e67e22'; this.style.color = '#fff';
+  document.getElementById('tabChart').style.background = '#f0f0f0'; document.getElementById('tabChart').style.color = '#333';
+});
+// 生成走势图（根据勾选记录）
+document.getElementById('btnDrawChart').addEventListener('click', function() {
+  var checkedKeys = [];
+  document.querySelectorAll('.rowCheck:checked').forEach(function(cb) {
+    checkedKeys.push(cb.dataset.date + '_' + cb.dataset.session);
+  });
+  if (!checkedKeys.length) { alert('請先勾選記錄 / 请先勾选记录'); return; }
+  var selected = historyData.filter(function(r) {
+    return checkedKeys.indexOf(r.date_str + '_' + r.session) >= 0;
+  });
+  document.getElementById('chartView').style.display = 'block';
+  document.getElementById('tableView').style.display = 'none';
+  document.getElementById('tabChart').style.background = '#e67e22'; document.getElementById('tabChart').style.color = '#fff';
+  document.getElementById('tabTable').style.background = '#f0f0f0'; document.getElementById('tabTable').style.color = '#333';
+  renderHistoryChart(selected);
+});
+function renderHistoryTable() {
+  var html = '';
+  historyData.forEach(function(r, idx) {
+    var ds = r.date_str;
+    var dateStr = ds.substring(0,4)+'年'+parseInt(ds.substring(4,6))+'月'+parseInt(ds.substring(6,8))+'日';
+    var sesStr = r.session === 0 ? '14:30' : '21:30';
+    var checked = idx < 20 ? 'checked' : '';
+    html += '<tr>' +
+      '<td style="padding:6px;border-bottom:1px solid #eee;text-align:center"><input type="checkbox" class="rowCheck" '+checked+' data-date="'+ds+'" data-session="'+r.session+'"></td>' +
+      '<td style="padding:6px;border-bottom:1px solid #eee;text-align:center">'+dateStr+'</td>' +
+      '<td style="padding:6px;border-bottom:1px solid #eee;text-align:center">'+sesStr+'</td>' +
+      r.fruits.map(function(f,i){return '<td style="padding:6px;border-bottom:1px solid #eee;text-align:center">#'+f.id+' '+f.name+'</td>';}).join('') +
+      '</tr>';
+  });
+  document.getElementById('historyTbody').innerHTML = html;
+  document.getElementById('checkAllHist').onchange = function() {
+    document.querySelectorAll('.rowCheck').forEach(function(cb) { cb.checked = document.getElementById('checkAllHist').checked; });
+  };
+}
+function renderHistoryChart(records) {
+  // 彩票走势图：纵轴1-35，横轴是选中的记录
+  var recent = records || historyData.slice(0, 60);
+  var days = [];
+  recent.forEach(function(r) {
+    var ds = r.date_str;
+    var ses = r.session === 0 ? '1' : '2';
+    var label = parseInt(ds.substring(4,6))+'/'+parseInt(ds.substring(6,8))+"'"+ses;
+    if (days.indexOf(label) === -1) days.push(label);
+  });
+  days = days.reverse(); // 从远到近
+  var matrix = {};
+  for (var id = 1; id <= 35; id++) matrix[id] = {};
+  recent.forEach(function(r) {
+    var ds = r.date_str;
+    var ses = r.session === 0 ? '1' : '2';
+    var label = parseInt(ds.substring(4,6))+'/'+parseInt(ds.substring(6,8))+"'"+ses;
+    var dayIdx = days.indexOf(label);
+    if (dayIdx < 0) return;
+    r.fruits.forEach(function(f, rank) {
+      if (!matrix[f.id][dayIdx]) matrix[f.id][dayIdx] = [];
+      matrix[f.id][dayIdx].push(rank+1);
+    });
+  });
+  days.push('予想1', '予想2'); // 预留2空列选号
+  var html = '<h4 style="margin:0 0 8px;color:#333;font-size:.85rem">📈 選択記録の中獎分布（'+(days.length-2)+'件）</h4>';
+  html += '<table style="border-collapse:collapse;font-size:.6rem;white-space:nowrap">';
+  html += '<tr><th style="padding:2px 4px;border:1px solid #ddd;background:#f8f8f8">编号</th>';
+  days.forEach(function(d) { html += '<th style="padding:2px 4px;border:1px solid #ddd;background:#f8f8f8;font-weight:400">'+d+'</th>'; });
+  html += '</tr>';
+  var colors = ['#e74c3c','#e67e22','#f39c12'];
+  for (var id = 1; id <= 35; id++) {
+    var f = fruits.find(function(fr){return fr.id===id;});
+    html += '<tr><td style="padding:1px 4px;border:1px solid #ddd;background:#fafafa;font-weight:600;font-size:.6rem">#'+id+' '+(f?f.name:'')+'</td>';
+    days.forEach(function(d, idx) {
+      var hits = matrix[id][idx];
+      if (hits) {
+        var cells = hits.map(function(rank) {
+          return '<span style="display:inline-block;width:12px;height:12px;line-height:12px;text-align:center;border-radius:50%;background:'+colors[rank-1]+';color:#fff;margin:1px;font-weight:700;font-size:.6rem">'+rank+'</span>';
+        }).join('');
+        html += '<td style="padding:1px;border:1px solid #ddd;text-align:center;background:#fff8e1">'+cells+'</td>';
+      } else {
+        var isGuess = (d === '予想1' || d === '予想2');
+        if (isGuess) {
+          html += '<td class="guess-cell" style="padding:1px;border:1px solid #ddd;cursor:pointer;text-align:center;color:#1a237e;font-weight:700;font-size:.7rem" data-row="'+id+'" data-col="'+d+'"></td>';
+        } else {
+          html += '<td style="padding:1px;border:1px solid #ddd"></td>';
+        }
+      }
+    });
+    html += '</tr>';
+  }
+  html += '</table>';
+  html += '<p style="margin-top:10px;font-size:.75rem;color:#999">🔴=第1名 🟠=第2名 🟡=第3名 ｜ 予想列：クリックで 空→1→2→3→空</p>';
+  document.getElementById('chartView').innerHTML = html;
+  // 予想列点击循环
+  document.querySelectorAll('.guess-cell').forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      var cur = this.textContent.trim();
+      var next = cur === '' ? '1' : (cur === '1' ? '2' : (cur === '2' ? '3' : ''));
+      this.textContent = next;
+    });
+  });
+}
+
+/* SECTION: admin-module */
+(function initAdminModule() {
+  var _token = null;
+  function verifyPassword(pw) {
+    return fetch(API.login, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({password: pw})
+    }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.ok) { _token = d.token; }
+      return d.ok;
+    });
+  }
+
+  function authHeaders() {
+    return {'Content-Type':'application/json', 'X-Auth-Token': _token || ''};
+  }
+
+  // ── 後台模塊：僅在後端注入標記時加載 ──
+  var authed = false;
+  var _adminActive = window.__admin === true;
+
+  // ── 登录弹窗（動态创建） ──
+  function showLogin() {
+    var mask = document.createElement('div');
+    mask.className = 'xg-auth-mask';
+    mask.innerHTML = '<div class="xg-auth-box">' +
+      '<h3>管理者認証<br><small>管理員驗證</small></h3>' +
+      '<p>管理者パスワードを入力<br><small>請輸入管理密碼</small></p>' +
+      '<input type="password" id="xgPwInput" placeholder="パスワードを入力" autocomplete="off">' +
+      '<button class="xg-auth-btn" id="xgPwBtn">認証 / 驗證</button>' +
+      '<div class="xg-auth-err" id="xgPwErr"></div></div>';
+    document.body.appendChild(mask);
+    requestAnimationFrame(function() { mask.classList.add('visible'); });
+    var inp = document.getElementById('xgPwInput');
+    var btn = document.getElementById('xgPwBtn');
+    var err = document.getElementById('xgPwErr');
+    inp.focus();
+    function doVerify() {
+      var pw = inp.value;
+      if (!pw) { err.textContent = 'パスワードを入力してください / 請輸入密碼'; return; }
+      btn.disabled = true; btn.textContent = '認証中... / 驗證中...';
+      verifyPassword(pw).then(function(ok) {
+        if (ok) {
+          authed = true;
+          closeMask(mask);
+          setTimeout(openPanel, 300);
+        } else {
+          err.textContent = 'パスワードが間違っています / 密碼錯誤，請重試';
+          btn.disabled = false; btn.textContent = '验证';
+          inp.value = ''; inp.focus();
+        }
+      });
+    }
+    btn.addEventListener('click', doVerify);
+    inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') doVerify(); });
+    mask.addEventListener('click', function(e) { if (e.target === mask) closeMask(mask); });
+  }
+
+  function closeMask(el) {
+    el.classList.remove('visible');
+    setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+  }
+
+  // ── 動态生成管理面板 ──
+  function openPanel() {
+    var existing = document.getElementById('xgAdminRoot');
+    if (existing) { existing.style.display = 'flex'; loadSettings(); return; }
+    var styleEl = document.createElement('style');
+    styleEl.textContent = '#xgAdminRoot{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;justify-content:center;align-items:center}' +
+      '.xg-panel{background:#fff;border-radius:20px;width:560px;max-width:94vw;max-height:88vh;overflow-y:auto;padding:32px 28px;box-shadow:0 16px 48px rgba(0,0,0,.2);position:relative}' +
+      '.xg-panel h2{font-size:1.3rem;color:#2d3436;margin-bottom:6px}.xg-panel .xg-sub{font-size:.82rem;color:#999;margin-bottom:20px}' +
+      '.xg-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}' +
+      '.xg-close:hover{color:#e74c3c}.xg-sg{margin-bottom:24px}.xg-sg h3{font-size:1rem;color:#27ae60;margin-bottom:12px}' +
+      '.xg-pr{display:flex;align-items:center;gap:10px;margin-bottom:10px}.xg-pl{font-size:.85rem;color:#666;font-weight:600;width:50px;flex-shrink:0}' +
+      '.xg-pr select{flex:1;padding:10px 12px;border:2px solid #e0e0e0;border-radius:10px;font-size:.9rem;outline:none;background:#fff}' +
+      '.xg-pr select:focus{border-color:#27ae60}.xg-acts{display:flex;gap:12px;margin-top:20px}' +
+      '.xg-btn{padding:10px 24px;border-radius:10px;border:none;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}' +
+      '.xg-btn.p{background:#27ae60;color:#fff}.xg-btn.p:hover{background:#219a52}' +
+      '.xg-btn.d{background:#fff;color:#e74c3c;border:2px solid #e74c3c}.xg-btn.d:hover{background:#fef0f0}' +
+      '.xg-btn.s{background:#f0f0f0;color:#666}.xg-btn.s:hover{background:#e0e0e0}' +
+      '.xg-toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#27ae60;color:#fff;padding:12px 28px;border-radius:50px;font-size:.9rem;font-weight:500;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none}' +
+      '.xg-toast.show{opacity:1}.xg-stat{margin-top:16px;padding:12px 16px;background:#f8f9fa;border-radius:10px;font-size:.82rem;color:#666;line-height:1.7}.xg-stat strong{color:#27ae60}';
+    document.head.appendChild(styleEl);
+    var root = document.createElement('div');
+    root.id = 'xgAdminRoot';
+    var selectHtml = '<option value="">-- 自動ランダム / 自動隨機 --</option>';
+    fruits.forEach(function(f) { selectHtml += '<option value="' + f.id + '">#' + f.id + ' ' + f.emoji + ' ' + f.name + '</option>'; });
+    root.innerHTML = '<div class="xg-panel"><button class="xg-close" id="xgClose">&times;</button>' +
+      '<h2>無料管理画面<br><small>免單管理後台</small></h2>' +
+      '<div class="xg-sg"><h3>🎯 次回抽選 / 下一場開獎：<span id="xgNextLabel" style="color:#e67e22"></span></h3>' +
+      buildRows(selectHtml) + '</div>' +
+      '<div class="xg-acts"><button class="xg-btn p" id="xgSave">保存 / 保存設置</button>' +
+      '<button class="xg-btn d" id="xgClear">クリア / 清除設置</button>' +
+      '<button class="xg-btn s" id="xgCancel">キャンセル / 取消</button></div>' +
+      '<div class="xg-sg" style="margin-top:20px"><h3>⏰ 抽選時間設定 / 開獎時間設置</h3>' +
+      '<div class="xg-pr"><span class="xg-pl">1回目</span><input type="time" id="xgSlot1" value="14:30" style="flex:1;padding:10px 12px;border:2px solid #e0e0e0;border-radius:10px;font-size:.9rem"></div>' +
+      '<div class="xg-pr"><span class="xg-pl">2回目</span><input type="time" id="xgSlot2" value="21:30" style="flex:1;padding:10px 12px;border:2px solid #e0e0e0;border-radius:10px;font-size:.9rem"></div>' +
+      '<div class="xg-acts"><button class="xg-btn p" id="xgSaveSlots">保存 / 保存設置</button></div></div>' +
+      '<div class="xg-sg" style="margin-top:20px"><h3>🔑 パスワード変更 / 修改密碼</h3>' +
+      '<div class="xg-pr"><span class="xg-pl">舊</span><input type="password" id="xgOldPw" placeholder="舊密碼" style="flex:1;padding:10px 12px;border:2px solid #e0e0e0;border-radius:10px;font-size:.9rem"></div>' +
+      '<div class="xg-pr"><span class="xg-pl">新</span><input type="password" id="xgNewPw" placeholder="新密碼（至少6位）" style="flex:1;padding:10px 12px;border:2px solid #e0e0e0;border-radius:10px;font-size:.9rem"></div>' +
+      '<div class="xg-acts"><button class="xg-btn p" id="xgChangePw">変更 / 修改</button></div></div>' +
+      '<div class="xg-sg" style="margin-top:20px"><h3>📊 アクセス統計 / 訪客統計</h3>' +
+      '<button class="xg-btn s" id="xgVisitBtn" style="background:#9b59b6;color:#fff">📊 詳細統計 / 查看詳情</button></div>' +
+      '<div class="xg-sg" style="margin-top:20px"><h3>📜 履歴管理 / 歷史記錄管理</h3>' +
+      '<div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">' +
+      '<button class="xg-btn s" id="xgAddRecord" style="background:#27ae60;color:#fff">➕ 追加記錄 / 添加记录</button>' +
+      '<button class="xg-btn s" id="xgBatchAdd" style="background:#2980b9;color:#fff">📦 一括追加 / 批量添加</button>' +
+      '<button class="xg-btn s" id="xgDelAll" style="background:#e74c3c;color:#fff">🗑 全件削除 / 全部删除</button>' +
+      '</div>' +
+      '<div id="xgHistory" style="max-height:200px;overflow-y:auto;font-size:.8rem;line-height:1.8;border:1px solid #eee;border-radius:8px;padding:8px"></div></div>' +
+      '</div>' +
+      '<div class="xg-toast" id="xgToast"></div>';
+    document.body.appendChild(root);
+    bindPanelEvents();
+    loadSettings();
+    loadHistory();
+    loadVisits();
+  }
+
+  function loadVisits() {
+    // 按钮点击弹窗
+    document.getElementById('xgVisitBtn').addEventListener('click', function() {
+      // 创建弹窗
+      var modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center';
+      modal.innerHTML = '<div style="background:#fff;border-radius:16px;padding:25px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto">' +
+        '<h2 style="margin:0 0 15px">📊 訪客統計詳情</h2>' +
+        '<div id="visitContent" style="font-size:.9rem;line-height:2">加載中...</div>' +
+        '<button id="closeVisit" style="margin-top:15px;padding:10px 20px;background:#e74c3c;color:#fff;border:none;border-radius:8px;cursor:pointer">關閉</button>' +
+        '</div>';
+      document.body.appendChild(modal);
+      document.getElementById('closeVisit').addEventListener('click', function() { modal.remove(); });
+      modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
+
+      // 加载数据
+      fetch('/api/x7k2m/v1', {headers: authHeaders()}).then(r=>r.json()).then(function(d) {
+        if (d.ok === false) { document.getElementById('visitContent').textContent = '加載失敗'; return; }
+        var html = '<div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:15px;padding:10px;background:#f8f9fa;border-radius:8px">' +
+          '<div>今日訪問: <b style="color:#e67e22;font-size:1.2rem">'+d.today+'</b></div>' +
+          '<div>總訪問: <b style="color:#3498db;font-size:1.2rem">'+d.total+'</b></div>' +
+          '<div>獨立IP: <b style="color:#27ae60;font-size:1.2rem">'+d.unique_ip+'</b></div></div>';
+        html += '<div style="margin-bottom:10px"><b>設備分布</b><br>';
+        d.device.forEach(function(x){ html += x.device+': '+x.c+'次<br>'; });
+        html += '</div>';
+        html += '<div style="margin-bottom:10px"><b>操作系統分布</b><br>';
+        d.os.forEach(function(x){ html += x.os+': '+x.c+'次<br>'; });
+        html += '</div>';
+        html += '<div style="border-top:1px solid #eee;padding-top:10px"><b>最近訪問記錄</b>';
+        d.recent.forEach(function(r) {
+          html += '<div style="font-size:.8rem;color:#666;padding:4px 0;border-bottom:1px solid #f0f0f0">'+r.created_at+' | '+r.ip+' | '+r.device+' | '+r.os+' | '+r.browser+' | 來源: '+r.referer+' | 第'+r.visit_count+'次訪問</div>';
+        });
+        html += '</div>';
+        document.getElementById('visitContent').innerHTML = html;
+      });
+    });
+  }
+
+  function buildRows(opts) {
+    var labels = ['🥇 第1位','🥈 第2位','🥉 第3位'], h = '';
+    for (var i = 0; i < 3; i++) {
+      h += '<div class="xg-pr"><span class="xg-pl">' + labels[i] + '</span>' +
+        '<select data-rank="' + i + '" class="xg-sel">' + opts + '</select></div>';
+    }
+    return h;
+  }
+
+  function toast(msg) {
+    var t = document.getElementById('xgToast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  function bindPanelEvents() {
+    var root = document.getElementById('xgAdminRoot');
+    document.getElementById('xgClose').addEventListener('click', function() { root.style.display = 'none'; authed = false; });
+    document.getElementById('xgCancel').addEventListener('click', function() { root.style.display = 'none'; authed = false; });
+    root.addEventListener('click', function(e) { if (e.target === root) { root.style.display = 'none'; authed = false; } });
+
+    document.getElementById('xgSave').addEventListener('click', function() {
+      var sels = document.querySelectorAll('.xg-sel');
+      var vals = [];
+      sels.forEach(function(sel) { vals[parseInt(sel.dataset.rank)] = parseInt(sel.value) || 0; });
+      if (!vals.every(function(v) { return v > 0; })) {
+        toast('3つ選択してください / 請選滿3個水果'); return;
+      }
+      fetch(API.setNext, {
+        method:'POST', headers: authHeaders(),
+        body: JSON.stringify({fruit_ids: vals})
+      }).then(r => r.json()).then(function(data) {
+        if (data.ok) {
+          toast('保存完了 / 保存成功');
+          updateLucky();
+          setTimeout(function() { root.style.display = 'none'; authed = false; }, 600);
+        } else { toast(data.error || 'エラー'); }
+      });
+    });
+
+    document.getElementById('xgClear').addEventListener('click', function() {
+      fetch(API.clearNext, {method:'POST', headers: authHeaders()}).then(r => r.json()).then(function() {
+        document.querySelectorAll('.xg-sel').forEach(function(sel) { sel.value = ''; });
+        toast('クリアしました / 已清除，恢復自動隨機');
+        updateLucky();
+      });
+    });
+
+    // 修改密碼
+    document.getElementById('xgChangePw').addEventListener('click', function() {
+      var oldPw = document.getElementById('xgOldPw').value;
+      var newPw = document.getElementById('xgNewPw').value;
+      if (!oldPw || !newPw) { toast('舊/新密碼を入力 / 請輸入舊新密碼'); return; }
+      fetch(API.changePw, {
+        method:'POST', headers: authHeaders(),
+        body: JSON.stringify({old_password: oldPw, new_password: newPw})
+      }).then(r => r.json()).then(function(data) {
+        if (data.ok) {
+          toast('パスワード変更完了 / 密碼修改成功');
+          document.getElementById('xgOldPw').value = '';
+          document.getElementById('xgNewPw').value = '';
+        } else {
+          toast(data.error || 'エラー / 錯誤');
+        }
+      });
+    });
+
+    // 保存開獎時間
+    document.getElementById('xgSaveSlots').addEventListener('click', function() {
+      var t1 = document.getElementById('xgSlot1').value;
+      var t2 = document.getElementById('xgSlot2').value;
+      if (!t1 || !t2) { toast('時間を入力 / 請輸入時間'); return; }
+      var m1 = parseInt(t1.split(':')[0])*60 + parseInt(t1.split(':')[1]);
+      var m2 = parseInt(t2.split(':')[0])*60 + parseInt(t2.split(':')[1]);
+      fetch(API.slots, {
+        method:'POST', headers: authHeaders(),
+        body: JSON.stringify({slot1: m1, slot2: m2})
+      }).then(r => r.json()).then(function(data) {
+        if (data.ok) {
+          toast('時間保存完了 / 時間保存成功');
+          updateLucky();
+        } else {
+          toast(data.error || 'エラー / 錯誤');
+        }
+      });
+    });
+
+    // 加載當前開獎時間
+    fetch(API.slots).then(r => r.json()).then(function(data) {
+      var s1 = data.slots.slot1, s2 = data.slots.slot2;
+      document.getElementById('xgSlot1').value = pad2(Math.floor(s1/60)) + ':' + pad2(s1%60);
+      document.getElementById('xgSlot2').value = pad2(Math.floor(s2/60)) + ':' + pad2(s2%60);
+    });
+
+    // 添加记录
+    document.getElementById('xgAddRecord').addEventListener('click', function() {
+      var ds = prompt('日付を入力（例：20261013）\n输入日期（例：20261013）', '20261013');
+      if (!ds) return;
+      var ses = prompt('回戦を選択（0=14:30, 1=21:30）\n场次（0=14:30, 1=21:30）', '0');
+      if (ses === null) return;
+      var idsStr = prompt('3つのフルーツ番号をカンマ区切りで\n输入3个水果编号，逗号分隔（例：1,5,12）', '1,2,3');
+      if (!idsStr) return;
+      var ids = idsStr.split(',').map(function(x){return parseInt(x.trim());});
+      if (ids.length !== 3) { toast('3つの番号が必要 / 需要3个编号'); return; }
+      fetch('/api/x7k2m/a1', {method:'POST', headers: authHeaders(), body: JSON.stringify({items: [{date_str: ds, session: parseInt(ses), fruit_ids: ids}]})})
+        .then(r => r.json()).then(function(d) {
+          if (d.ok) { toast('追加完了 / 添加成功'); loadHistory(); }
+          else toast('エラー / 错误');
+        });
+    });
+
+    // 批量添加记录
+    document.getElementById('xgBatchAdd').addEventListener('click', function() {
+      var startDs = prompt('開始日付を入力（例：20261001）\n开始日期（例：20261001）', '20261001');
+      if (!startDs) return;
+      var endDs = prompt('終了日付を入力（例：20261013）\n结束日期（例：20261013）', '20261013');
+      if (!endDs) return;
+      if (!confirm(startDs + ' から ' + endDs + ' まで、毎日2回分ランダム生成します。\n从开始到结束，每天自动生成两场随机记录。')) return;
+      // 前端生成批量数据
+      var items = [];
+      var s = new Date(startDs.substring(0,4), parseInt(startDs.substring(4,6))-1, parseInt(startDs.substring(6,8)));
+      var e = new Date(endDs.substring(0,4), parseInt(endDs.substring(4,6))-1, parseInt(endDs.substring(6,8)));
+      while (s <= e) {
+        var ds = s.getFullYear() + String(s.getMonth()+1).padStart(2,'0') + String(s.getDate()).padStart(2,'0');
+        for (var sess = 0; sess < 2; sess++) {
+          var ids = [Math.floor(Math.random()*35)+1, Math.floor(Math.random()*35)+1, Math.floor(Math.random()*35)+1];
+          items.push({date_str: ds, session: sess, fruit_ids: ids});
+        }
+        s.setDate(s.getDate()+1);
+      }
+      fetch('/api/x7k2m/a1', {method:'POST', headers: authHeaders(), body: JSON.stringify({items: items})})
+        .then(r => r.json()).then(function(d) {
+          if (d.ok) { toast(items.length + '件追加完了 / 已添加' + items.length + '条记录'); loadHistory(); }
+        });
+    });
+
+    // 全部删除
+    document.getElementById('xgDelAll').addEventListener('click', function() {
+      if (!confirm('本当に全履歴を削除しますか？\n真的要删除全部历史记录吗？')) return;
+      if (!confirm('もう一度確認：削除しますか？\n再确认：确定删除？')) return;
+      fetch('/api/x7k2m/d1', {method:'POST', headers: authHeaders(), body: JSON.stringify({all: true})})
+        .then(r => r.json()).then(function(d) {
+          if (d.ok) { toast('全削除完了 / 全部删除完成'); loadHistory(); }
+        });
+    });
+  }
+
+  function loadHistory() {
+    fetch(API.history).then(r => r.json()).then(function(data) {
+      var html = '<div style="margin-bottom:6px"><label><input type="checkbox" id="xgCheckAll"> 全選 / 全选</label> <button id="xgDelSelected" style="padding:4px 10px;background:#e74c3c;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:.75rem">🗑 刪除選中</button></div>';
+      data.history.forEach(function(h) {
+        var ds = h.date_str;
+        var dateStr = ds.substring(0,4) + '/' + parseInt(ds.substring(4,6)) + '/' + parseInt(ds.substring(6,8));
+        var sessLabel = h.session === 0 ? '14:30' : '21:30';
+        var names = h.fruits.map(function(f) { return '#' + f.id + ' ' + f.name; }).join('、');
+        html += '<label style="display:flex;align-items:center;gap:6px;padding:2px 0"><input type="checkbox" class="xg-rowcheck" data-date="'+ds+'" data-session="'+h.session+'"> ' + dateStr + ' ' + sessLabel + '：' + names + '</label>';
+      });
+      document.getElementById('xgHistory').innerHTML = html || '履歴なし / 暫無記錄';
+      // 全选
+      document.getElementById('xgCheckAll').addEventListener('change', function() {
+        document.querySelectorAll('.xg-rowcheck').forEach(function(cb) { cb.checked = this.checked; }, this);
+      });
+      // 删除选中
+      document.getElementById('xgDelSelected').addEventListener('click', function() {
+        var ids = [];
+        document.querySelectorAll('.xg-rowcheck:checked').forEach(function(cb) {
+          ids.push([cb.dataset.date, parseInt(cb.dataset.session)]);
+        });
+        if (!ids.length) { toast('削除する記録を選択 / 请选择要删除的记录'); return; }
+        if (!confirm(ids.length + '件削除しますか？\n删除选中的 ' + ids.length + ' 条记录？')) return;
+        fetch('/api/x7k2m/d1', {method:'POST', headers: authHeaders(), body: JSON.stringify({ids: ids})})
+          .then(r => r.json()).then(function(d) {
+            if (d.ok) { toast('削除完了 / 删除完成'); loadHistory(); }
+          });
+      });
+    });
+  }
+
+  function loadSettings() {
+    fetch(API.next).then(r => r.json()).then(function(data) {
+      document.getElementById('xgNextLabel').textContent = data.next_label;
+      var vals = data.current_ids;
+      if (vals && vals.length === 3) {
+        document.querySelectorAll('.xg-sel').forEach(function(sel) {
+          sel.value = vals[parseInt(sel.dataset.rank)] || '';
+        });
+      }
+    });
+  }
+  if (_adminActive) { showLogin(); }
+})();
+
+/* SECTION: interactions */
+if(document.getElementById('filterTabs')){
+  document.getElementById('filterTabs').addEventListener('click', e => {
+    const tab = e.target.closest('.filter-tab');
+    if (!tab) return;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeCategory = tab.dataset.category;
+    renderFruits();
+  });
+}
+
+if(document.getElementById('searchInput')){
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchQuery = e.target.value.trim();
+    renderFruits();
+  });
+}
+
+/* SECTION: mobile nav */
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.getElementById('navLinks').addEventListener('click', e => {
+  if (e.target.tagName === 'A') {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+});
+
+/* SECTION: scroll highlight */
+const sections = ['hero','features','lucky','fruits','promo','about'];
+const navAnchors = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop - 100 <= window.scrollY) current = id;
+  });
+  navAnchors.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+/* init */
+renderFruits();
+</script>
+</body>
+</html>
